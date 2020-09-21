@@ -1,0 +1,51 @@
+{extend name="public/base"}
+{block name="head_static"}
+<script src="/__STATIC__/admin/js/plugins/layer/layer.min.js"></script>
+{/block}
+{block name="body"}
+<body class="gray-bg">
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+                <h1 class="logo-name">O</h1>
+            </div>
+            <h3>欢迎使用</h3>
+            <form class="m-t" role="form" action="">
+                <div class="form-group">
+                    <input type="name" class="form-control" name="username" value="" placeholder="用户名" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" value="" placeholder="密码" required="">
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
+                <p class="text-muted text-center">
+                    <a href="login.html#"><small>忘记密码了？</small></a> | <!--<a href="register.html">注册一个新账号</a>-->
+                </p>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("form").submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('Login/index')}",
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.code==0){
+                            location.href="{:url('Index/index')}";
+                        }else{
+                            parent.layer.msg(data.message);
+                        }
+                    },
+                    error: function (msg) {
+                        console.info(msg);
+                    },
+                });
+            });
+        });
+    </script>
+</body>
+{/block}
